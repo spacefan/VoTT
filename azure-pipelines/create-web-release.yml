@@ -1,4 +1,4 @@
-name: "Web Release [$SourceBranchName] - $(Date:yyyyMMdd)$(Rev:.r)"
+name: "Web Release [$(SourceBranchName)] - $(Date:yyyyMMdd)$(Rev:.r)"
 trigger:
   branches:
     include:
