@@ -1,3 +1,5 @@
+name: "GitHub & Web Release [$(SourceBranchName)] - $(Date:yyyyMMdd)$(Rev:.r)"
+
 trigger: none # manual queue only when we're ready to release
 pr: none # disable CI build for PR
 
@@ -49,40 +51,18 @@ stages:
         SOURCE_BRANCH: $(Build.SourceBranch)
         NPM_VERSION_TYPE: $(NPM_VERSION_TYPE) # major/minor/patch
 
-- stage: package_build
-  dependsOn: version_bump_commit
-  jobs:
-  - template: templates/build-artifact.yml
-    parameters:
-      name: Linux
-      pool:
-        vmImage: ubuntu-16.04
-      os: linux
-      artifact: vott*.snap
-
-  - template: templates/build-artifact.yml
-    parameters:
-      name: Windows
-      pool:
-        vmImage: "windows-2019"
-      os: windows
-      artifact: vott*.exe
-
-  - template: templates/build-artifact.yml
-    parameters:
-      name: MacOS
-      pool:
-        vmImage: macOS-10.15
-      os: mac
-      artifact: vott*.dmg
-
 - stage: github_release
-  dependsOn: package_build
+  dependsOn: version_bump_commit
   jobs:
   - template: templates/create-github-release.yml
     parameters:
-      GitHubConnection: 'GitHub connection'
+      GitHubConnection: 'GitHub connection' # defaults for any parameters that aren't specified
       repositoryName: '$(Build.Repository.Name)' # microsoft/VoTT
-      isPreRelease: $(IS_PRERELEASE)
-      isDraft: false
+      isPreRelease: $(IS_PRERELEASE) # set when queuing build
+      isDraft: $(IS_DRAFT)
       lastReleaseTag: $(LAST_RELEASE_TAG)
+
+- stage: web_release
+  dependsOn: version_bump_commit
+  jobs:
+  - template: templates/create-web-release.yml
