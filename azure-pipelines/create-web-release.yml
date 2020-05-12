@@ -7,7 +7,7 @@ pool:
 
 variables:
   azureSubscription: "pj-little-sub"
-  DEV_STORAGE_ACCOUNT: 'vottv2'
+  DEV_STORAGE_ACCOUNT: 'vottdev'
   PROD_STORAGE_ACCOUNT: 'vott'
 
 steps:

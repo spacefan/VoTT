@@ -19,12 +19,31 @@ Use [npm-version](https://docs.npmjs.com/cli/version) to update version
 
 ### Pre
 
-All version with `pre`, ie. `preminor` will append `-0` to the new version
+All version with `pre`, ie. `preminor` will bump the appropriate didgit & append `-0` to the new version
 
 Examples:
 
-1. `npm version prepatch` - v2.3.0 --> v2.3.1-0
-1. `npm version preminor` - v2.3.0 --> v2.4.0-0
+`npm version prepatch`
+
+1. v2.3.0 --> v2.3.1-0
+1. v2.3.1-0 --> v2.3.2-0
+
+`npm version preminor`
+
+1. v2.3.0 --> v2.4.0-0
+1. v2.4.0-0 --> v2.5.0-0
+
+#### Exception
+
+`prerelease` behave similar to prepatch, but would increment the last digit.
+
+Examples:
+
+`npm version prerelease`
+
+v2.3.0 --> v2.3.1-0
+
+v2.3.0-0 --> v2.3.0-1
 
 ### Major
 
