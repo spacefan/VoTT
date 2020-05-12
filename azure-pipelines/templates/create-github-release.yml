@@ -1,32 +1,35 @@
-  parameters:
-    GitHubConnection: '' # defaults for any parameters that aren't specified
-    repositoryName: ''
-    releaseNotesSource: input
-    addChangeLog: false
-    isPreRelease: true
-    isDraft: true
+parameters:
+  GitHubConnection: '' # defaults for any parameters that aren't specified
+  repositoryName: ''
+  isPreRelease: true
+  isDraft: true
+  lastReleaseTag: ''
 
-  jobs:
-  - job: Create_Github_Release
-    timeoutInMinutes: 30 # timeout on job if deploy is not completed in 30 minutes
-    pool:
-      vmImage: ubuntu-16.04
-    steps:
-    - checkout: none # we already have the artifacts built, don't need the code
+jobs:
+- job: Create_Github_Release
+  timeoutInMinutes: 30 # timeout on job if deploy is not completed in 30 minutes
+  pool:
+    vmImage: ubuntu-16.04
+  steps:
+  - checkout: none # we already have the artifacts built, don't need the code
 
-    - download: current
+  - download: current
 
-    - task: GitHubRelease@0
-      displayName: 'GitHub release (create)'
-      inputs:
-        gitHubConnection: ${{ parameters.GitHubConnection }}
-        repositoryName: ${{ parameters.repositoryName }}
-        releaseNotesSource: ${{ parameters.releaseNotesSource }}
-        target: $(Build.SourceBranch)
-        assets: |
-          ../linux/*
-          ../windows/*
-          ../mac/*
-        addChangeLog: ${{ parameters.addChangeLog }}
-        isDraft: true # for testing, change to true when ready to merge
-        isPreRelease: ${{ parameters.isPrelease }}
+  - task: GitHubRelease@1
+    displayName: 'GitHub release (create)'
+    inputs:
+      gitHubConnection: ${{ parameters.GitHubConnection }}
+      repositoryName: '$(Build.Repository.Name)'
+      action: 'create'
+      target: '$(Build.SourceVersion)'
+      tagSource: 'gitTag'
+      releaseNotesFilePath: './CHANGELOG.md'
+      assets: |
+        ../linux/*
+        ../windows/*
+        ../mac/*
+      isDraft: ${{ parameters.isDraft }}
+      isPreRelease: ${{ parameters.isPrelease }}
+      changeLogCompareToRelease: 'lastNonDraftReleaseByTag'
+      changeLogCompareToReleaseTag: ${{ parameters.lastReleaseTag }}
+      changeLogType: 'commitBased'
