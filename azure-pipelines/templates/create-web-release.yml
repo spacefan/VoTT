@@ -46,7 +46,7 @@ jobs:
       - bash: |
           echo
           echo "Head to $DEV_URL"
-        condition: neq(variables['Build.SourceBranch'], 'refs/heads/master')
+        condition: ne(variables['Build.SourceBranch'], 'refs/heads/master')
 
       - bash: |
           echo
