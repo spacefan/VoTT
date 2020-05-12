@@ -3,6 +3,11 @@ name: "GitHub & Web Release [$(SourceBranchName)] - $(Date:yyyyMMdd)$(Rev:.r)"
 trigger: none # manual queue only when we're ready to release
 pr: none # disable CI build for PR
 
+variables:
+  azureSubscription: "pj-little-sub"
+  DEV_STORAGE_ACCOUNT: 'vottdev'
+  PROD_STORAGE_ACCOUNT: 'vott'
+
 stages:
 - stage: version_bump_commit
   jobs:
