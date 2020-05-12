@@ -42,3 +42,13 @@ jobs:
           storage: $(PROD_STORAGE_ACCOUNT)
           containerName: '$web'
         condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+
+      - bash: |
+          echo
+          echo "Head to $DEV_URL"
+        condition: neq(variables['Build.SourceBranch'], 'refs/heads/master')
+
+      - bash: |
+          echo
+          echo "Head to $PROD_URL"
+        condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
