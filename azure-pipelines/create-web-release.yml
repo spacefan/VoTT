@@ -1,9 +1,5 @@
 name: "Web Release [$(SourceBranchName)] - $(Date:yyyyMMdd)$(Rev:.r)"
-trigger:
-  branches:
-    include:
-      - develop
-      - master
+trigger: none # manual release
 pr: none # disable CI build for PR
 
 pool:

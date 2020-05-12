@@ -41,13 +41,13 @@ stages:
 
     - task: Bash@3
       name: BumpNpmVersion
-      displayName: Bump NPM Prerelease Version
+      displayName: Bump NPM Version
       inputs:
         targetType: filePath
         filePath: ./scripts/version-bump-commit.sh
       env:
         SOURCE_BRANCH: $(Build.SourceBranch)
-        NPM_RELEASE_TYPE: $(NPM_RELEASE_TYPE) # release or use default for preview
+        NPM_VERSION_TYPE: $(NPM_VERSION_TYPE) # major/minor/patch
 
 - stage: package_build
   dependsOn: version_bump_commit
