@@ -41,7 +41,10 @@ jobs:
       vmImage: ubuntu-16.04
 
     steps:
-    - checkout: none # we already have the artifacts built, don't need the code
+    # - checkout: none # we already have the artifacts built, don't need the code
+    - bash: |
+        git pull
+      displayName: "Pull latest after version bump"
 
     - download: current
 

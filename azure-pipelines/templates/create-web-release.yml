@@ -4,6 +4,10 @@ jobs:
       vmImage: 'windows-latest'
 
     steps:
+      - bash: |
+          git pull
+        displayName: "Pull latest after version bump"
+
       - task: NodeTool@0
         displayName: 'Use Node 10.x'
         inputs:
@@ -46,9 +50,11 @@ jobs:
       - bash: |
           echo
           echo "Head to $DEV_URL"
+        displayName: "Web URL"
         condition: ne(variables['Build.SourceBranch'], 'refs/heads/master')
 
       - bash: |
           echo
           echo "Head to $PROD_URL"
+        displayName: "Web URL"
         condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
