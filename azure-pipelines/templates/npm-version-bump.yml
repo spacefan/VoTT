@@ -40,6 +40,7 @@ jobs:
     inputs:
       targetType: filePath
       filePath: ./scripts/version-bump-commit.sh
+      arguments:
+        $(NPM_VERSION_TYPE)
     env:
       SOURCE_BRANCH: $(Build.SourceBranch)
-      NPM_VERSION_TYPE: $(NPM_VERSION_TYPE) # major/minor/prerelease
