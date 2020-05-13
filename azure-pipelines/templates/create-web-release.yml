@@ -5,7 +5,7 @@ jobs:
 
     steps:
       - bash: |
-          git pull
+          git pull origin $(SourceBranch)
         displayName: "Pull latest after version bump"
 
       - task: NodeTool@0
