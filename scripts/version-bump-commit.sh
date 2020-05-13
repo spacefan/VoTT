@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-NPM_VERSION_TYPE=${1-"prepatch --preid=preview"}
+NPM_VERSION_TYPE=${1:-"prepatch --preid=preview"}
 echo "new version type: $NPM_VERSION_TYPE"
 
 # Get full branch name excluding refs/head from the env var SOURCE_BRANCH
