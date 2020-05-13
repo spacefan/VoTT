@@ -5,6 +5,7 @@ jobs:
 
     steps:
       - bash: |
+          printenv | sort
           git pull origin $(BUILD_SOURCE_BRANCH)
         displayName: "Pull latest after version bump"
 
